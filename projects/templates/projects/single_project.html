@@ -3,5 +3,12 @@
 {% block content %}
     <h3>{{ project_obj.title }}</h3>
 
+    <hr>
+        {% for tag in tags %}
+            {{ tag.name }}
+        {% endfor %}
+
+    <hr>
+
     
 {% endblock %}
