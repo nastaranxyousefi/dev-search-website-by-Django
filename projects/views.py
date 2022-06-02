@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 
 from .models import Project, Tag
+from .forms import ProjectForm
 
 def projects(request):
     all_projects = Project.objects.all()
@@ -22,7 +23,8 @@ def project(request, pk):
 
 
 def create_project(request):
+    form = ProjectForm()
     context = {
-
+        'form' : form
     }
     return render(request, 'projects/project_form.html', context)
