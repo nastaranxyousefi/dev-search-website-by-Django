@@ -19,3 +19,10 @@ def project(request, pk):
         'tags' : tags
     }
     return render(request, 'projects/single_project.html', context)
+
+
+def create_project(request):
+    context = {
+
+    }
+    return render(request, 'projects/project_form.html', context)
