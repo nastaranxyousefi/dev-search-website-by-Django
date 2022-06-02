@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
 
 from .models import Project, Tag
@@ -24,6 +24,12 @@ def project(request, pk):
 
 def create_project(request):
     form = ProjectForm()
+    if request.method == "POST":
+        form = ProjectForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('projects')
+
     context = {
         'form' : form
     }
