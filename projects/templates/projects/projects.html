@@ -8,7 +8,9 @@
         <th>ID</th>
         <th>project</th>
         <th>vote</th>
-        <th>ratio</th>
+        <th>positive votes</th>
+        <th>time created</th>
+        <th></th>
 
     </tr>
 
@@ -17,7 +19,9 @@
         <td> {{ project.id }} </td>
         <td> {{ project.title }} </td>
         <td> {{ project.vote_total }} </td>
-        <td> {{ project.vote_ratio }} </td>
+        <td> {{ project.vote_ratio }}%</td>
+        <td> {{ project.created }} </td>
+        <td><a href="{% url 'project' project.id %}">view</a> </td>
 
         </tr>
 
