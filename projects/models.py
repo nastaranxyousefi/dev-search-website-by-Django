@@ -16,9 +16,6 @@ class Project(models.Model):
     def __str__(self):
         return self.title
 
-    # def get_absolute_url(self):
-    #     return reverse('project', args=[str(self.id)])
-
 
 class Review(models.Model):
     VOTE_CHOICES = (

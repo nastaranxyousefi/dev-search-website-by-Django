@@ -11,6 +11,7 @@
         <th>positive votes</th>
         <th>time created</th>
         <th></th>
+        <th></th>
 
     </tr>
 
@@ -22,6 +23,7 @@
         <td> {{ project.vote_ratio }}%</td>
         <td> {{ project.created }} </td>
         <td><a href="{% url 'project' project.id %}">view</a> </td>
+        <td><a href="{% url 'update_project' project.id %}">Edit</a> </td>
 
         </tr>
 
