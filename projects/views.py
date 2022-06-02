@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
+from django.urls import reverse
+
 
 from .models import Project, Tag
 from .forms import ProjectForm
@@ -44,6 +46,7 @@ def update_project(request, pk):
         form = ProjectForm(request.POST, instance=project_obj)
         if form.is_valid():
             form.save()
+            return redirect(reverse('project', args=[project_obj.id]))
 
 
     context = {
