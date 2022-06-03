@@ -53,3 +53,12 @@ def update_project(request, pk):
         'form': form
     }
     return render(request, 'projects/project_form.html', context)
+
+
+def delete_project(request, pk):
+    project_obj = Project.objects.get(id=pk)
+
+    context = {
+        'project' : project_obj
+    }
+    return render(request, 'projects/delete_project.html', context)
