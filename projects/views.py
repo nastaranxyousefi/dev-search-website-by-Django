@@ -48,7 +48,6 @@ def update_project(request, pk):
             form.save()
             return redirect(reverse('project', args=[project_obj.id]))
 
-
     context = {
         'form': form
     }
@@ -57,6 +56,10 @@ def update_project(request, pk):
 
 def delete_project(request, pk):
     project_obj = Project.objects.get(id=pk)
+
+    if request.method == 'POST':
+        project_obj.delete()
+        return redirect('projects')
 
     context = {
         'project' : project_obj
