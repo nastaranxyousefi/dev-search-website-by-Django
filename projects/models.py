@@ -5,7 +5,7 @@ from django.urls import reverse
 class Project(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField(null=True, blank=True)
-    featured_image = models.ImageField(null=True, blank=True, )
+    featured_image = models.ImageField(null=True, blank=True, default='project_cover/default.jpg', upload_to='project_cover/')
     demo_link = models.CharField(max_length=2000, null=True, blank=True)
     source_code = models.CharField(max_length=2000, null=True, blank=True)
     tags = models.ManyToManyField('Tag', blank=True)
