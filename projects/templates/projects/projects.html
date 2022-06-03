@@ -12,6 +12,7 @@
         <th>time created</th>
         <th></th>
         <th></th>
+        <th></th>
 
     </tr>
 
@@ -24,6 +25,8 @@
         <td> {{ project.created }} </td>
         <td><a href="{% url 'project' project.id %}">view</a> </td>
         <td><a href="{% url 'update_project' project.id %}">Edit</a> </td>
+        <td><a href="{% url 'delete_project' project.id %}">Delete</a> </td>
+
 
         </tr>
 
