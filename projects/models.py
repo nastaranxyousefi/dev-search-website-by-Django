@@ -2,7 +2,11 @@ from django.db import models
 import uuid
 from django.urls import reverse
 
+from users.models import Profile
+
+
 class Project(models.Model):
+    owner = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True, blank=True)
     title = models.CharField(max_length=200)
     description = models.TextField(null=True, blank=True)
     featured_image = models.ImageField(null=True, blank=True, default='project_cover/default.jpg', upload_to='project_cover/')
