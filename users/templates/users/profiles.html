@@ -41,24 +41,11 @@
                 </div>
                 <p class="dev__info">{{ profile.bio|truncatewords:30 }}</p>
                 <div class="dev__skills">
-                  <span class="tag tag--pill tag--main">
-                    <small>JavaScript</small>
-                  </span>
-                  <span class="tag tag--pill tag--main">
-                    <small>React</small>
-                  </span>
-                  <span class="tag tag--pill tag--main">
-                    <small>SCSS</small>
-                  </span>
-                  <span class="tag tag--pill tag--main">
-                    <small>Nodejs</small>
-                  </span>
-                  <span class="tag tag--pill tag--main">
-                    <small>Express</small>
-                  </span>
-                  <span class="tag tag--pill tag--main">
-                    <small>GraphQL</small>
-                  </span>
+                    {% for skill in profile.skill_set.all %}
+                      <span class="tag tag--pill tag--main">
+                        <small>{{ skill.name }}</small>
+                      </span>
+                    {% endfor %}
                 </div>
               </a>
             </div>
