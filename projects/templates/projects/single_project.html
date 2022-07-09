@@ -28,7 +28,7 @@
         </div>
         <div class="column column--2of3">
           <img class="singleProject__preview" src="{{ project_obj.featured_image.url }}" alt="{{ project_obj.title}}" />
-          <a href="{% url 'project' project_obj.id %}" class="singleProject__developer">Md. Shahriar Parvez</a>
+          <a href="{% url 'user-profile' project_obj.owner.pk %}" class="singleProject__developer">{{ project_obj.owner.name}}</a>
           <h2 class="singleProject__title">{{ project_obj.title }}</h2>
           <h3 class="singleProject__subtitle">About the Project</h3>
           <div class="singleProject__info">
