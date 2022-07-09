@@ -9,3 +9,7 @@ def profiles(request):
         'profiles' : profiles,
     }
     return render(request, 'users/profiles.html', context)
+
+
+def user_profile(request, pk):
+    return render(request, 'users/user-profile.html')
