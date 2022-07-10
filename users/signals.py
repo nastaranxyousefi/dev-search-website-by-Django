@@ -24,3 +24,7 @@ def create_profile(sender, instance, created, **kwargs):
 post_save.connect(create_profile, sender=User)
 
 
+@receiver(post_delete, sender=Profile)
+def delete_user(sender, instance, **kwargs):
+    user = instance.user
+    user_deleted = User.objects.filter(username__exact=user).delete()
