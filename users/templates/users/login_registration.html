@@ -1,0 +1,12 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+    <form action="{% url 'login' %}" method="POST">
+        <input type="text" name="username" placeholder="username">
+        <input type="password" name="password" placeholder="enter password">
+        <input type="submit" value="login">
+
+    </form>
+
+{% endblock %}
