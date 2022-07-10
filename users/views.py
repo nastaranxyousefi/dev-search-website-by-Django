@@ -4,6 +4,11 @@ from django.shortcuts import get_object_or_404
 from .models import Profile
 from projects.models import Project
 
+
+def login_page(request):
+    return render(request, 'users/login_registration.html')
+
+
 def profiles(request):
     profiles = Profile.objects.all()
     context = {
