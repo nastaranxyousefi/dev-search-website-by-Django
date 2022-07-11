@@ -1,4 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 
 from .models import Profile
@@ -6,6 +8,25 @@ from projects.models import Project
 
 
 def login_page(request):
+    if request.method == 'POST':
+        #set the request.post elements to username & password
+        username = request.POST['username']
+        password = request.POST['password']
+
+        #make sure the user exists:
+        try:
+            user = User.objects.get(username=username)
+        except:
+            print("the username doesn't exist.")
+
+        user = authenticate(request, username=username, password=password)   #make sure password matches the user. return user instance or None
+
+        if user is not None:
+            login(request, user) #Create a session for this user in the database.
+            return redirect('profiles')
+        else:
+            print('the username and password is incorrect.')
+
     return render(request, 'users/login_registration.html')
 
 
