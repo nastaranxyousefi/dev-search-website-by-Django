@@ -8,6 +8,9 @@ from projects.models import Project
 
 
 def login_page(request):
+    if request.user.is_authenticated: #restrict a logged-in user from seeing login url.
+        return redirect('profiles')
+
     if request.method == 'POST':
         #set the request.post elements to username & password
         username = request.POST['username']
