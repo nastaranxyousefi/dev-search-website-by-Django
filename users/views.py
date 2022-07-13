@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
+from django.contrib import messages
 
 from .models import Profile
 from projects.models import Project
@@ -20,7 +21,7 @@ def login_page(request):
         try:
             user = User.objects.get(username=username)
         except:
-            print("the username doesn't exist.")
+            messages.error(request, "The username doesn't exist.")
 
         user = authenticate(request, username=username, password=password)   #make sure password matches the user. return user instance or None
 
@@ -28,13 +29,14 @@ def login_page(request):
             login(request, user) #Create a session for this user in the database.
             return redirect('profiles')
         else:
-            print('the username and password is incorrect.')
+            messages.error(request, 'Username or password is incorrect.')
 
     return render(request, 'users/login_registration.html')
 
 
 def logout_user(request):
     logout(request) #delete that session
+    messages.info(request, 'User was logged out.')
     return redirect('login')
 
 def profiles(request):
