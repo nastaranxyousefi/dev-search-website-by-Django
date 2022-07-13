@@ -23,7 +23,7 @@
         {% for message in messages %}
             <div style="margin-right: 50%;" class="alert alert--{{ message.tags }}">
                 <p class="alert__message">{{ message }}</p>
-                <button class="alert__close">x</button>
+
             </div>
         {% endfor %}
 
@@ -32,4 +32,5 @@
 
 {% endblock %}
 </body>
+<script src="{% static 'uikit/app.js'%}"></script>
 </html>
