@@ -9,6 +9,8 @@ from projects.models import Project
 
 
 def login_page(request):
+    page = 'login'
+
     if request.user.is_authenticated: #restrict a logged-in user from seeing login url.
         return redirect('profiles')
 
@@ -31,6 +33,10 @@ def login_page(request):
         else:
             messages.error(request, 'Username or password is incorrect.')
 
+
+    context = {
+        'page' : page,
+    }
     return render(request, 'users/login_registration.html')
 
 
@@ -38,6 +44,15 @@ def logout_user(request):
     logout(request) #delete that session
     messages.info(request, 'User was logged out.')
     return redirect('login')
+
+
+def register_user(request):
+    page = 'register'
+    context = {
+        'page': page,
+    }
+    return render(request, 'users/login_registration.html', context)
+
 
 def profiles(request):
     profiles = Profile.objects.all()
