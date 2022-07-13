@@ -14,6 +14,16 @@ def create_profile(sender, instance, created, **kwargs):
             name=full_name,
             email=user.email,
         )
+    else:
+        user = instance
+        full_name = user.first_name + ' ' + user.last_name
+
+        profile = Profile.objects.filter(username__exact=user.username).update(
+            user=user,
+            username=user.username,
+            name=full_name,
+            email=user.email,
+        )
 
 post_save.connect(create_profile, sender=User)
 
