@@ -3,6 +3,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 from django.contrib import messages
+from django.contrib.auth.forms import UserCreationForm
 
 from .models import Profile
 from projects.models import Project
@@ -47,9 +48,25 @@ def logout_user(request):
 
 
 def register_user(request):
+    form = UserCreationForm()
     page = 'register'
+
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.username = user.username.lower()
+            user.save()
+
+            messages.success(request, 'User account was created!')
+            login(request, user)
+            return redirect('profiles')
+        else:
+            messages.error(request, 'An error has occurred during the registration.')
+
     context = {
         'page': page,
+        'form' : form,
     }
     return render(request, 'users/login_registration.html', context)
 
