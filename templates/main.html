@@ -20,11 +20,13 @@
 <body>
 {% include 'navbar.html' %}
     {% if messages %}
-    <ul class="messages">
         {% for message in messages %}
-        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            <div style="margin-right: 50%;" class="alert alert--{{ message.tags }}">
+                <p class="alert__message">{{ message }}</p>
+                <button class="alert__close">x</button>
+            </div>
         {% endfor %}
-    </ul>
+
     {% endif %}
 {% block content %}
 
