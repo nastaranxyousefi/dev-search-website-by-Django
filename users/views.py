@@ -4,8 +4,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.contrib import messages
-from .forms import CustomUserCreationForm
 
+from .forms import CustomUserCreationForm, ProfileForm
 from .models import Profile
 from projects.models import Project
 
@@ -108,4 +108,8 @@ def user_account(request):
 
 @login_required(login_url='login')
 def edit_account(request):
-    return render(request, 'users/profile_form.html')
+    form = ProfileForm()
+    context = {
+        'form' : form,
+    }
+    return render(request, 'users/profile_form.html', context)
