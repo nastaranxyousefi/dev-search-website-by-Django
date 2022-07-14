@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.contrib import messages
 from .forms import CustomUserCreationForm
@@ -92,6 +93,14 @@ def user_profile(request, pk):
     }
     return render(request, 'users/user-profile.html', context)
 
-
+@login_required(login_url='login')
 def user_account(request):
-    return render(request, 'users/account.html')
+    profile = request.user.profile
+    skills = profile.skill_set.all()
+    projects = profile.project_set.all()
+    context = {
+        'profile' : profile,
+        'skills' : skills,
+        'projects' : projects,
+    }
+    return render(request, 'users/account.html', context)
