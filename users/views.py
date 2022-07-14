@@ -91,3 +91,7 @@ def user_profile(request, pk):
         'projects' : projects,
     }
     return render(request, 'users/user-profile.html', context)
+
+
+def user_account(request):
+    return render(request, 'users/account.html')
