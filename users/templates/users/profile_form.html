@@ -2,7 +2,7 @@
 
 {% block content %}
     <h2>Edit Account</h2>
-    <form method="POST" action="{% url 'edit-account' %}">
+    <form method="POST" action="{% url 'edit-account' %}" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
         <input type="submit" value="submit">
