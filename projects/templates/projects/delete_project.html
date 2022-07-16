@@ -5,7 +5,7 @@
     <form action="" method="POST">
     <p>Are you sure to delete {{ project.title }} project?</p>
         {% csrf_token %}
-        <a href="{% url 'projects' %}">Go back</a>
+        <a href="{% url 'my-account' %}">Go back</a>
         <input type="submit" value="confirm">
     </form>
 {% endblock %}

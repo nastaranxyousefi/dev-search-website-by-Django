@@ -26,11 +26,14 @@ def project(request, pk):
 
 @login_required(login_url='login')
 def create_project(request):
+    profile = request.user.profile
     form = ProjectForm()
     if request.method == "POST":
         form = ProjectForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            project = form.save(commit=False)
+            project.owner = profile
+            project.save()
             return redirect('projects')
 
     context = {
