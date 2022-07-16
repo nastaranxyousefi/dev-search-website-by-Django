@@ -43,7 +43,8 @@ def create_project(request):
 
 @login_required(login_url='login')
 def update_project(request, pk):
-    project_obj = Project.objects.get(id=pk)
+    profile = request.user.profile
+    project_obj = profile.project_set.get(id=pk)
     form = ProjectForm(instance=project_obj)
 
     if request.method == "POST":
@@ -60,7 +61,8 @@ def update_project(request, pk):
 
 @login_required(login_url='login')
 def delete_project(request, pk):
-    project_obj = Project.objects.get(id=pk)
+    profile = request.user.profile
+    project_obj = profile.project_set.get(id=pk)
 
     if request.method == 'POST':
         project_obj.delete()
