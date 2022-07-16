@@ -23,3 +23,8 @@ class ProfileForm(ModelForm):
         fields = ['name', 'username', 'email','short_intro', 'bio', 'location',
                   'profile_image', 'social_github', 'social_linkedin',
                   'social_website', 'social_twitter']
+
+    def __init__(self, *args, **kwargs):
+        super(ProfileForm, self).__init__(*args, **kwargs)
+        for name, field in self.fields.items():
+            field.widget.attrs.update({'class' : 'input'})

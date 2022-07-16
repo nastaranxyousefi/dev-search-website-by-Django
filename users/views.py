@@ -31,7 +31,7 @@ def login_page(request):
 
         if user is not None:
             login(request, user) #Create a session for this user in the database.
-            return redirect('profiles')
+            return redirect('my-account')
         else:
             messages.error(request, 'Username or password is incorrect.')
 
@@ -61,7 +61,7 @@ def register_user(request):
 
             messages.success(request, 'User account was created!')
             login(request, user)
-            return redirect('profiles')
+            return redirect('edit-account')
         else:
             messages.error(request, 'An error has occurred during the registration.')
 
