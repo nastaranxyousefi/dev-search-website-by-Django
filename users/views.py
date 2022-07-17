@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.contrib import messages
 
-from .forms import CustomUserCreationForm, ProfileForm
+from .forms import CustomUserCreationForm, ProfileForm, SkillForm
 from .models import Profile
 from projects.models import Project
 
@@ -124,6 +124,8 @@ def edit_account(request):
 
 @login_required(login_url='login')
 def create_skill(request):
+    form = SkillForm()
     context = {
+        'form' : form,
     }
     return render(request, 'users/skill_form.html', context)
