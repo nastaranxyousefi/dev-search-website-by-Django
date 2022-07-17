@@ -126,6 +126,7 @@ def edit_account(request):
 def create_skill(request):
     profile = request.user.profile
     form = SkillForm()
+
     if request.method == 'POST':
         form = SkillForm(request.POST)
         if form.is_valid():
@@ -133,6 +134,25 @@ def create_skill(request):
             skill.owner = profile
             skill.save()
             return redirect('my-account')
+
+    context = {
+        'form' : form,
+    }
+    return render(request, 'users/skill_form.html', context)
+
+
+@login_required(login_url='login')
+def update_skill(request, pk):
+    profile = request.user.profile
+    skill = profile.skill_set.get(id=pk)
+    form = SkillForm(instance=skill)
+
+    if request.method == 'POST':
+        form = SkillForm(request.POST, instance=skill)
+        if form.is_valid():
+            form.save()
+            return redirect('my-account')
+
     context = {
         'form' : form,
     }
