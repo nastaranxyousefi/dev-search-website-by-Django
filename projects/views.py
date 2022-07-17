@@ -69,6 +69,6 @@ def delete_project(request, pk):
         return redirect('projects')
 
     context = {
-        'project' : project_obj
+        'object' : project_obj
     }
-    return render(request, 'projects/delete_project.html', context)
+    return render(request, 'delete_template.html', context)
