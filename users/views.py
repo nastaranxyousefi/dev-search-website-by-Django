@@ -133,6 +133,7 @@ def create_skill(request):
             skill = form.save(commit=False)
             skill.owner = profile
             skill.save()
+            messages.success(request, 'Skill was added successfully')
             return redirect('my-account')
 
     context = {
@@ -157,3 +158,19 @@ def update_skill(request, pk):
         'form' : form,
     }
     return render(request, 'users/skill_form.html', context)
+
+
+@login_required(login_url='login')
+def delete_skill(request, pk):
+    profile = request.user.profile
+    skill = profile.skill_set.get(id=pk)
+
+    if request.method == "POST":
+        skill.delete()
+        return redirect('my-account')
+
+    context = {
+        'skill' : skill,
+    }
+    return redirect(request, 'delete_template.html', context)
+
