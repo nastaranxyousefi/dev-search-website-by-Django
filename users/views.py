@@ -170,7 +170,7 @@ def delete_skill(request, pk):
         return redirect('my-account')
 
     context = {
-        'skill' : skill,
+        'object' : skill,
     }
-    return redirect(request, 'delete_template.html', context)
+    return render(request, 'delete_template.html', context)
 
