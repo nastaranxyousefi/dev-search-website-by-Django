@@ -152,6 +152,7 @@ def update_skill(request, pk):
         form = SkillForm(request.POST, instance=skill)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Skill was updated successfully')
             return redirect('my-account')
 
     context = {
@@ -167,6 +168,7 @@ def delete_skill(request, pk):
 
     if request.method == "POST":
         skill.delete()
+        messages.success(request, 'Skill was deleted successfully')
         return redirect('my-account')
 
     context = {
