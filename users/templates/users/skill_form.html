@@ -1,0 +1,10 @@
+{% extends 'main.html' %}
+
+{% block content %}
+    <h2>create skill</h2>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="submit">
+    </form>
+
+{% endblock %}
