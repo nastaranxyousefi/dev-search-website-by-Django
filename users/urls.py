@@ -13,4 +13,6 @@ urlpatterns = [
     path('my-account/', views.user_account, name='my-account'),
     path('edit-account/', views.edit_account, name='edit-account'),
 
+    path('add-skill/', views.create_skill, name='add-skill'),
+
 ]
