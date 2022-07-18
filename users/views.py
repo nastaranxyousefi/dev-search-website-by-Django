@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.contrib import messages
-from django.db.models import Q
+
 from .forms import CustomUserCreationForm, ProfileForm, SkillForm
 from .models import Profile, Skill
 from projects.models import Project
