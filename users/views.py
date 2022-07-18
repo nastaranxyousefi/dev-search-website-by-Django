@@ -4,9 +4,9 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.contrib import messages
-
+from django.db.models import Q
 from .forms import CustomUserCreationForm, ProfileForm, SkillForm
-from .models import Profile
+from .models import Profile, Skill
 from projects.models import Project
 
 
@@ -73,9 +73,16 @@ def register_user(request):
 
 
 def profiles(request):
-    profiles = Profile.objects.all()
+    search_query = request.GET.get('q') or ''
+    skills = Skill.objects.filter(name__icontains=search_query)
+    profiles = Profile.objects.distinct().filter(
+       Q(name__icontains=search_query) |
+       Q(short_intro__icontains= search_query) |
+       Q(skill__in=skills)
+    )
     context = {
         'profiles' : profiles,
+        'search_query' : search_query,
     }
     return render(request, 'users/profiles.html', context)
 
