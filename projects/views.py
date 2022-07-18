@@ -2,13 +2,14 @@ from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-from django.db.models import Q
+
+from .utils import search_projects
 
 from .models import Project
 from .forms import ProjectForm
 
 def projects(request):
-
+    search_query, projects = search_projects(request)
     context = {
         'projects' : projects,
         'search_query' : search_query,
