@@ -2,15 +2,22 @@ from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-
+from django.db.models import Q
 
 from .models import Project, Tag
 from .forms import ProjectForm
 
 def projects(request):
-    all_projects = Project.objects.all()
+    search_query = request.GET.get('q') or ''
+    projects = Project.objects.distinct().filter(
+        Q(title__icontains=search_query) |
+        Q(description__icontains=search_query) |
+        Q(owner__name__icontains=search_query) |
+        Q(tags__name__icontains=search_query)
+    )
     context = {
-        'projects' : all_projects,
+        'projects' : projects,
+        'search_query' : search_query,
     }
     return render(request, 'projects/projects.html', context)
 

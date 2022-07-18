@@ -6,8 +6,9 @@ from django.shortcuts import get_object_or_404
 from django.contrib import messages
 
 from .forms import CustomUserCreationForm, ProfileForm, SkillForm
-from .models import Profile, Skill
+from .models import Profile
 from projects.models import Project
+from .utils import search_profiles
 
 
 def login_page(request):
@@ -73,7 +74,7 @@ def register_user(request):
 
 
 def profiles(request):
-
+    search_query , profiles = search_profiles(request)
     context = {
         'profiles' : profiles,
         'search_query' : search_query,
