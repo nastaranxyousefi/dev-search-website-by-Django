@@ -2,14 +2,28 @@ from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from .utils import search_projects
-
 from .models import Project
 from .forms import ProjectForm
 
 def projects(request):
     search_query, projects = search_projects(request)
+    page = request.GET.get('page', 1)
+    results = 3
+    paginator = Paginator(projects, results)
+    try:
+        projects = paginator.page(page)
+    except EmptyPage:
+        if int(page) <= 0:
+            projects = paginator.page(1)
+        else:
+            projects = paginator.page(paginator.num_pages)
+
+    except PageNotAnInteger:
+        projects = paginator.page(1)
+
     context = {
         'projects' : projects,
         'search_query' : search_query,

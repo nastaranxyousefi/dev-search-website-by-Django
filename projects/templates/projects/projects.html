@@ -59,6 +59,31 @@
       </div>
     </section>
 
+  <div class="pagination">
+      <ul class="container">
+          {% if projects.has_previous %}
+            <li><a href="?page={{projects.previous_page_number}}" class="btn">&#10094; Prev</a></li>
+          {% endif %}
+        {% for i in projects.paginator.page_range %}
+            {% if projects.number == i %}
+                <a href="?page={{ i }}" class="text-decoration-none">
+                            <li><a href=?page={{ i }} class="btn btn--sub">{{ i }}</a></li>
+                </a>
+
+            {% else %}
+                <a href="?page={{ i }}" class="text-decoration-none">
+                            <li><a href="?page={{ i }}" class="btn">{{ i }}</a></li>
+                </a>
+            {% endif %}
+        {% endfor %}
+
+          {% if projects.has_next %}
+            <li><a href="?page={{projects.next_page_number}}" class="btn">Next &#10095;</a></li>
+          {% endif %}
+
+      </ul>
+    </div>
+
   </main>
 
 
