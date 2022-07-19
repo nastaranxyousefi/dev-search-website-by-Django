@@ -11,7 +11,7 @@ from .forms import ProjectForm
 def projects(request):
     search_query, projects = search_projects(request)
     page = request.GET.get('page', 1)
-    results = 3
+    results = 6
     paginator = Paginator(projects, results)
     try:
         projects = paginator.page(page)

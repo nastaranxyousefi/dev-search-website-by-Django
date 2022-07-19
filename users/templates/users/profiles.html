@@ -11,7 +11,7 @@
         </div>
 
         <div class="hero-section__search">
-          <form class="form" action="{% url 'profiles' %}" method="get">
+          <form id="searchForm" class="form" action="{% url 'profiles' %}" method="get">
             <div class="form__field">
               <label for="formInput#search">Search Developers </label>
               <input class="input input--text" value="{{ search_query }}" id="formInput#search" type="text" name="q"

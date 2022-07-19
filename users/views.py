@@ -78,7 +78,7 @@ def register_user(request):
 def profiles(request):
     search_query , profiles = search_profiles(request)
     page = request.GET.get('page', 1)
-    results = 3
+    results = 6
     paginator = Paginator(profiles, results)
     try:
         profiles = paginator.page(page)
