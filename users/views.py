@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.contrib import messages
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
 
 from .forms import CustomUserCreationForm, ProfileForm, SkillForm
 from .models import Profile
@@ -75,6 +77,19 @@ def register_user(request):
 
 def profiles(request):
     search_query , profiles = search_profiles(request)
+    page = request.GET.get('page', 1)
+    results = 3
+    paginator = Paginator(profiles, results)
+    try:
+        profiles = paginator.page(page)
+    except EmptyPage:
+        if int(page) <= 0:
+            profiles = paginator.page(1)
+        else:
+            profiles = paginator.page(paginator.num_pages)
+
+    except PageNotAnInteger:
+        profiles = paginator.page(1)
     context = {
         'profiles' : profiles,
         'search_query' : search_query,
