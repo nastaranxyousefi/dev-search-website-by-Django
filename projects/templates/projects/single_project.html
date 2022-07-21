@@ -40,16 +40,18 @@
             <h5 class="project--rating">
                 {{ project_obj.vote_ratio }}% Positive Feedback ({{ project_obj.vote_total }} Vote{{ project_obj.vote_total|pluralize:"s" }})
             </h5>
-
-            <form class="form" action="#" method="POST">
-              <!-- Textarea -->
-              <div class="form__field">
-                <label for="formInput#textarea">Comments: </label>
-                <textarea class="input input--textarea" name="message" id="formInput#textarea"
-                  placeholder="Write your comments here..."></textarea>
-              </div>
-              <input class="btn btn--sub btn--lg" type="submit" value="Comments" />
-            </form>
+            {% if not voted_user %}
+                <form class="form" action="{% url 'project' project_obj.id %}" method="POST">
+                    {% csrf_token %}
+                    {% for field in form %}
+                      <div class="form__field">
+                        <label for="formInput#textarea">{{ field.label}}: </label>
+                          {{ field }}
+                      </div>
+                    {% endfor %}
+                  <input class="btn btn--sub btn--lg" type="submit" value="Comments" />
+                </form>
+            {% endif %}
             <div class="commentList">
                 {% for review in project_obj.review_set.all %}
                 {% if review.body %}

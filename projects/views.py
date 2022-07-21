@@ -3,10 +3,11 @@ from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib import messages
 
 from .utils import search_projects
-from .models import Project
-from .forms import ProjectForm
+from .models import Project, Review
+from .forms import ProjectForm, ReviewForm
 
 def projects(request):
     search_query, projects = search_projects(request)
@@ -32,11 +33,29 @@ def projects(request):
 
 def project(request, pk):
     project_obj = get_object_or_404(Project, pk=pk)
+    profile = request.user.profile
     tags = project_obj.tags.all()
+    voted_user = Review.objects.filter(owner__username=profile, project=project_obj)
+    form = ReviewForm()
+    if request.method == 'POST':
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            review = form.save(commit = False)
+            review.owner = profile
+            review.project = project_obj
+            review.save()
+
+            messages.success(request, 'Your review was successfully submitted!')
+            return redirect(reverse('project', args=[str(project_obj.id)]))
+
+
 
     context = {
         'project_obj' : project_obj,
-        'tags' : tags
+        'tags' : tags,
+        'form' : form,
+        'profile' : profile,
+        'voted_user' : voted_user
     }
     return render(request, 'projects/single_project.html', context)
 
