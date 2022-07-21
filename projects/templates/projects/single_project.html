@@ -51,31 +51,22 @@
               <input class="btn btn--sub btn--lg" type="submit" value="Comments" />
             </form>
             <div class="commentList">
-              <div class="comment">
-                <a href="profile.html">
-                  <img class="avatar avatar--md"
-                    src="https://pbs.twimg.com/profile_images/1335382240931368961/b3wSZKj4_400x400.jpg" alt="user" />
-                </a>
-                <div class="comment__details">
-                  <a href="profile.html" class="comment__author">Sulamita Ivanov</a>
-                  <p class="comment__info">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit alias numquam perferendis
-                    mollitia minus minima exercitationem possimus ab deserunt qui, soluta iusto doloribus eveniet
-                    similique consequuntur ratione, dignissimos ut magni laborum quo.
-                  </p>
-                </div>
-              </div>
-              <div class="comment">
-                <a href="profile.html">
-                  <img class="avatar avatar--md" src="https://avatars.githubusercontent.com/u/33843378" alt="user" />
-                </a>
-                <div class="comment__details">
-                  <a href="profile.html" class="comment__author">Dennis Ivanov</a>
-                  <p class="comment__info">
-                    Consectetur adipisicing elit. Reprehenderit alias numquam perferendis mollitia minus minima
-                    exercitationem possimus ab deserunt qui, ratione, dignissimos ut magni laborum quo.
-                  </p>
-                </div>
+                {% for review in project_obj.review_set.all %}
+                {% if review.body %}
+                  <div class="comment">
+                    <a href="{% url 'user-profile' review.owner.id %}">
+                      <img class="avatar avatar--md"
+                        src="{{ review.owner.profile_image.url }}" alt="user" />
+                    </a>
+                    <div class="comment__details">
+                      <a href="{% url 'user-profile' review.owner.id %}" class="comment__author">{{ review.owner.name }}</a>
+                      <p class="comment__info">{{ review.body|linebreaks }}</p>
+                    </div>
+                  </div>
+
+                {% endif %}
+                {% endfor %}
+
               </div>
             </div>
           </div>
