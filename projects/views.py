@@ -33,18 +33,16 @@ def projects(request):
 
 def project(request, pk):
     project_obj = get_object_or_404(Project, pk=pk)
-    profile = request.user.profile
     tags = project_obj.tags.all()
-    voted_user = Review.objects.filter(owner__username=profile, project=project_obj)
     form = ReviewForm()
     if request.method == 'POST':
         form = ReviewForm(request.POST)
         if form.is_valid():
             review = form.save(commit = False)
-            review.owner = profile
+            review.owner = request.user.profile
             review.project = project_obj
             review.save()
-
+            project_obj.get_vote_count
             messages.success(request, 'Your review was successfully submitted!')
             return redirect(reverse('project', args=[str(project_obj.id)]))
 
@@ -54,8 +52,7 @@ def project(request, pk):
         'project_obj' : project_obj,
         'tags' : tags,
         'form' : form,
-        'profile' : profile,
-        'voted_user' : voted_user
+
     }
     return render(request, 'projects/single_project.html', context)
 
