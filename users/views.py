@@ -15,13 +15,12 @@ from .utils import search_profiles
 
 def login_page(request):
     page = 'login'
-
     if request.user.is_authenticated: #restrict a logged-in user from seeing login url.
         return redirect('profiles')
 
     if request.method == 'POST':
         #set the request.post elements to username & password
-        username = request.POST['username']
+        username = request.POST['username'].lower()
         password = request.POST['password']
 
         #make sure the user exists:
@@ -34,7 +33,7 @@ def login_page(request):
 
         if user is not None:
             login(request, user) #Create a session for this user in the database.
-            return redirect('my-account')
+            return redirect(request.GET['next'] if 'next' in request.GET else 'my-account')
         else:
             messages.error(request, 'Username or password is incorrect.')
 

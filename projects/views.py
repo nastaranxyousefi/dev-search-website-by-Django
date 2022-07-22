@@ -4,6 +4,7 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib import messages
+from django.db.models import Q
 
 from .utils import search_projects
 from .models import Project, Review
@@ -35,6 +36,11 @@ def project(request, pk):
     project_obj = get_object_or_404(Project, pk=pk)
     tags = project_obj.tags.all()
     form = ReviewForm()
+    if request.user.is_authenticated:
+        reviews = project_obj.review_set.filter(owner__username__exact=request.user.profile)
+    else:
+        reviews = None
+
     if request.method == 'POST':
         form = ReviewForm(request.POST)
         if form.is_valid():
@@ -52,6 +58,7 @@ def project(request, pk):
         'project_obj' : project_obj,
         'tags' : tags,
         'form' : form,
+        'reviews' : reviews,
 
     }
     return render(request, 'projects/single_project.html', context)
