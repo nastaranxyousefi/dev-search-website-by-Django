@@ -192,3 +192,5 @@ def delete_skill(request, pk):
     }
     return render(request, 'delete_template.html', context)
 
+
+
