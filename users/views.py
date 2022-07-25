@@ -209,5 +209,16 @@ def inbox_view(request):
     return render(request, 'users/inbox.html', context)
 
 
-def view_message(requset):
-    return render(requset, 'users/message.html')
+@login_required(login_url='login')
+def view_message(request, pk):
+    profile = request.user.profile
+    message = get_object_or_404(Message, pk=pk)
+    if message.is_read == False:
+        message.is_read = True
+        message.save()
+
+    context = {
+        'profile' : profile,
+        'message' : message,
+    }
+    return render(request, 'users/message.html', context)

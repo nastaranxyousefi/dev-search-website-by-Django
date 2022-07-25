@@ -7,7 +7,7 @@
       <ul class="messages">
         {% for message in unread_messages %}
             <li class="message message--unread">
-              <a href="message.html">
+              <a href="{% url 'message' message.pk %}">
                   {% if message.sender %}
                     <span class="message__author">{{ message.sender.name }}</span>
                   {% elif message.name is not None %}
@@ -20,7 +20,7 @@
         {% endfor %}
         {% for r_message in read_messages %}
             <li class="message">
-              <a href="message.html">
+              <a href="{% url 'message' r_message.pk %}">
                   {% if r_message.sender %}
                     <span class="message__author">{{ r_message.sender.name }}</span>
                   {% elif r_message.name is not None %}
