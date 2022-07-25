@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
-from .forms import CustomUserCreationForm, ProfileForm, SkillForm
+from .forms import CustomUserCreationForm, ProfileForm, SkillForm, MessageForm
 from .models import Profile, Message
 from projects.models import Project
 from .utils import search_profiles
@@ -222,3 +222,12 @@ def view_message(request, pk):
         'message' : message,
     }
     return render(request, 'users/message.html', context)
+
+
+@login_required(login_url='login')
+def send_message(request, pk):
+    form = MessageForm()
+    context = {
+        'form' : form,
+    }
+    return render(request, 'users/message_form.html', context)
