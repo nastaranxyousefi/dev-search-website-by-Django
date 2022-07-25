@@ -207,3 +207,7 @@ def inbox_view(request):
     }
 
     return render(request, 'users/inbox.html', context)
+
+
+def view_message(requset):
+    return render(requset, 'users/message.html')
