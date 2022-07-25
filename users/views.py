@@ -8,7 +8,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 from .forms import CustomUserCreationForm, ProfileForm, SkillForm
-from .models import Profile
+from .models import Profile, Message
 from projects.models import Project
 from .utils import search_profiles
 
@@ -193,5 +193,17 @@ def delete_skill(request, pk):
     return render(request, 'delete_template.html', context)
 
 
+@login_required(login_url='login')
 def inbox_view(request):
-    return render(request, 'users/inbox.html')
+    profile = request.user.profile
+    read_messages = profile.messages.exclude(is_read=False)
+    unread_messages = profile.messages.filter(is_read=False)
+    unread_messages_count = unread_messages.count()
+
+    context = {
+        'read_messages' : read_messages,
+        'unread_messages' : unread_messages,
+        'unread_messages_count' : unread_messages_count
+    }
+
+    return render(request, 'users/inbox.html', context)
