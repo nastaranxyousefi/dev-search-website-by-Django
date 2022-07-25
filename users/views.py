@@ -193,4 +193,5 @@ def delete_skill(request, pk):
     return render(request, 'delete_template.html', context)
 
 
-
+def inbox_view(request):
+    return render(request, 'users/inbox.html')
