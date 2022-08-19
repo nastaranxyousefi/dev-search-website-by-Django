@@ -10,6 +10,7 @@ from .utils import search_projects
 from .models import Project, Review
 from .forms import ProjectForm, ReviewForm
 
+
 def projects(request):
     search_query, projects = search_projects(request)
     page = request.GET.get('page', 1)
@@ -48,7 +49,7 @@ def project(request, pk):
             review.owner = request.user.profile
             review.project = project_obj
             review.save()
-            project_obj.get_vote_count
+            project_obj.get_vote_count  #it will update vote ratio and vote total.
             messages.success(request, 'Your review was successfully submitted!')
             return redirect(reverse('project', args=[str(project_obj.id)]))
 
