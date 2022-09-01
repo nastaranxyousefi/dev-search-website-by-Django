@@ -22,6 +22,14 @@ class Profile(models.Model):
     def __str__(self):
         return str(self.username)
 
+    @property
+    def image_URL(self):
+        try:
+            url = self.profile_image.url
+        except:
+            url = 'http://127.0.0.1:8000/images/profiles/user-default.png'
+        return url
+
 
 class Skill(models.Model):
     owner = models.ForeignKey(Profile, on_delete=models.CASCADE)

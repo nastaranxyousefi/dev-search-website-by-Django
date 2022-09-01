@@ -33,7 +33,7 @@
             <div class="dev">
               <a href="{% url 'user-profile' profile.pk %}" class="card__body">
                 <div class="dev__profile">
-                  <img class="avatar avatar--md" src="{{ profile.profile_image.url }}" alt="image" />
+                  <img class="avatar avatar--md" src="{{ profile.image_URL }}" alt="image" />
                   <div class="dev__meta">
                     <h3>{{ profile.name }}</h3>
                     <h5>{{ profile.short_intro|truncatewords:6 }}</h5>
