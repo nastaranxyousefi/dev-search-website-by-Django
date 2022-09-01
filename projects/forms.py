@@ -6,7 +6,7 @@ class ProjectForm(ModelForm):
     class Meta:
         model = Project
         fields = ['title', 'description', 'featured_image', 'demo_link',
-                  'source_code', 'tags']    #fields variable is a dictionary.
+                  'source_code']    #fields variable is a dictionary.
         widgets = {
             'tags' : forms.CheckboxSelectMultiple(),
         }

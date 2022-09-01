@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.db.models import Q
 
 from .utils import search_projects
-from .models import Project, Review
+from .models import Project, Review, Tag
 from .forms import ProjectForm, ReviewForm
 
 
@@ -69,9 +69,14 @@ def create_project(request):
     profile = request.user.profile
     form = ProjectForm()
     if request.method == "POST":
+        newtags = request.POST.get('newtags').replace(',', " ").split()
+
         form = ProjectForm(request.POST, request.FILES)
         if form.is_valid():
             project = form.save(commit=False)
+            for tag in newtags:
+                tag, created = Tag.objects.get_or_create(name=tag)
+                project.tags.add(tag)
             project.owner = profile
             project.save()
             return redirect(reverse('project', args=[project.id]))
@@ -88,9 +93,15 @@ def update_project(request, pk):
     form = ProjectForm(instance=project_obj)
 
     if request.method == "POST":
+        newtags = request.POST.get('newtags').replace(',', " ").split()
+
         form = ProjectForm(request.POST, request.FILES, instance=project_obj)
         if form.is_valid():
-            form.save()
+            project = form.save()
+            for tag in newtags:
+                tag, created = Tag.objects.get_or_create(name=tag)
+                project.tags.add(tag)
+
             return redirect(reverse('project', args=[project_obj.id]))
 
     context = {
