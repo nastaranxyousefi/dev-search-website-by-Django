@@ -36,6 +36,15 @@ class Project(models.Model):
         self.save()
 
 
+    @property
+    def image_URL(self):
+        try:
+            url = self.featured_image.url
+        except:
+            url = 'http://127.0.0.1:8000/images/project_cover/default.jpg'
+        return url
+
+
 class Review(models.Model):
     VOTE_CHOICES = (
         ('up', 'Up Vote'),
