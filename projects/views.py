@@ -105,7 +105,8 @@ def update_project(request, pk):
             return redirect(reverse('project', args=[project_obj.id]))
 
     context = {
-        'form': form
+        'form': form,
+        'project' : project_obj,
     }
     return render(request, 'projects/project_form.html', context)
 

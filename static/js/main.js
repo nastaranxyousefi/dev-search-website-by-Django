@@ -18,3 +18,5 @@ let searchForm = document.getElementById('searchForm')  //accessing to searchFor
             })
         }
     }
+
+

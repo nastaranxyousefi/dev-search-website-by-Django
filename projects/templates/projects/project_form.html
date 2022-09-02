@@ -21,6 +21,11 @@
 
                     <div class="form__field">
                         <label for="formInput#text">Tags: </label>
+
+                        {% for tag in project.tags.all %}
+                            <div class="tag tag--pill tag--main project-tag" data-tag="{{ tag.id }}" data-project="{{ project.id }}" >{{ tag.name }} &#215;</div>
+                        {% endfor %}
+
                         <p>Create space between each word!</p>
                         <textarea class="input" name="newtags" placeholder="Add tags here..."></textarea>
                     </div>
@@ -30,4 +35,7 @@
             </div>
         </div>
     </main>
+
+
+
 {% endblock %}
