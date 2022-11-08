@@ -53,8 +53,6 @@ def project(request, pk):
             messages.success(request, 'Your review was successfully submitted!')
             return redirect(reverse('project', args=[str(project_obj.id)]))
 
-
-
     context = {
         'project_obj' : project_obj,
         'tags' : tags,
@@ -63,6 +61,7 @@ def project(request, pk):
 
     }
     return render(request, 'projects/single_project.html', context)
+
 
 @login_required(login_url='login')
 def create_project(request):
@@ -74,11 +73,11 @@ def create_project(request):
         form = ProjectForm(request.POST, request.FILES)
         if form.is_valid():
             project = form.save(commit=False)
+            project.owner = profile
+            project.save()
             for tag in newtags:
                 tag, created = Tag.objects.get_or_create(name=tag)
                 project.tags.add(tag)
-            project.owner = profile
-            project.save()
             return redirect(reverse('project', args=[project.id]))
 
     context = {
